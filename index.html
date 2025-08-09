@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Steady State Games</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      background: #0f1222;
+      color: #eef1ff;
+    }
+    header {
+      background: #171a2e;
+      padding: 1rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #7aa2ff;
+    }
+    nav a {
+      color: #eef1ff;
+      text-decoration: none;
+      margin-left: 1rem;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 1rem;
+    }
+    section {
+      margin-bottom: 2rem;
+    }
+    h2 {
+      border-bottom: 2px solid #2a2f52;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      color: #7aa2ff;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background: #171a2e;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid #2a2f52;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card h3 {
+      margin-top: 0;
+      color: #5dd6b0;
+    }
+    .card p {
+      flex-grow: 1;
+    }
+    .card a {
+      display: inline-block;
+      margin-top: 0.5rem;
+      color: #7aa2ff;
+      text-decoration: none;
+    }
+    .card a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      background: #171a2e;
+      text-align: center;
+      padding: 1rem;
+      color: #b7c0ff;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Steady State Games</h1>
+    <nav>
+      <a href="#dailies">Dailies</a>
+      <a href="#weeklies">Weeklies</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="dailies">
+      <h2>Dailies</h2>
+      <div class="cards" id="dailies-list"></div>
+    </section>
+
+    <section id="weeklies">
+      <h2>Weeklies</h2>
+      <div class="cards" id="weeklies-list"></div>
+    </section>
+
+    <section id="portfolio">
+      <h2>Portfolio</h2>
+      <div class="cards" id="portfolio-list"></div>
+    </section>
+
+    <section id="about">
+      <h2>About</h2>
+      <p>Welcome to Steady State Games! This is my collection of daily experiments, weekly challenges, and full portfolio projects. I’m Shawn, an indie game developer building projects in Godot 4 and beyond.</p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; <span id="year"></span> Steady State Games. All rights reserved.
+  </footer>
+
+  <script>
+    const CONTENT = {
+      dailies: [
+        {
+          title: "Hangman",
+          date: "2025-08-09",
+          desc: "A single-file HTML/JS hangman game with sound effects, hints, and difficulty levels.",
+          href: "./dailies/2025-08-09-hangman.html"
+        }
+      ],
+      weeklies: [],
+      portfolio: []
+    };
+
+    function createCard({ title, date, desc, href }) {
+      const card = document.createElement("div");
+      card.className = "card";
+      const h3 = document.createElement("h3");
+      h3.textContent = title;
+      const pDate = document.createElement("small");
+      pDate.style.color = "#b7c0ff";
+      pDate.textContent = date;
+      const pDesc = document.createElement("p");
+      pDesc.textContent = desc;
+      const link = document.createElement("a");
+      link.href = href;
+      link.textContent = "View Project";
+      card.append(h3, pDate, pDesc, link);
+      return card;
+    }
+
+    function renderSection(listId, items) {
+      const container = document.getElementById(listId);
+      container.innerHTML = "";
+      items
+        .sort((a,b) => new Date(b.date) - new Date(a.date))
+        .forEach(item => container.appendChild(createCard(item)));
+    }
+
+    renderSection("dailies-list", CONTENT.dailies);
+    renderSection("weeklies-list", CONTENT.weeklies);
+    renderSection("portfolio-list", CONTENT.portfolio);
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
