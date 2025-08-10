@@ -531,7 +531,7 @@
   musicVolEl.addEventListener('input', ()=>{ musicVolume = musicVolEl.value/100; if (musicEl) musicEl.volume = musicVolume; saveVolumes(); });
   sfxVolEl.addEventListener('input', ()=>{ sfxVolume = sfxVolEl.value/100; ensureAC(); masterGain.gain.value = sfxVolume; saveVolumes(); });
 
-  function startGame(){
+function startGame(){
   ensureAC();
   try { stopChargeLoop(); } catch {}
   if ((musicEl && (musicEl.querySelector('source') || musicEl.src))) {
