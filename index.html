@@ -82,43 +82,53 @@
   </footer>
 
   <script>
-    // Site content
+    // Resolve base for GitHub Pages vs custom domain
+    const BASE = location.hostname.endsWith('github.io')
+      ? '/steadystategames.github.io/'
+      : '/';
+
     const CONTENT = {
       micro: [
         {
           title: "Hangman",
           date: "2025-08-09",
           desc: "A single-file HTML/JS hangman with SFX, hints, and difficulty.",
-          href: "./micro_projects/hangman/"
+          href: "micro_projects/hangman/"               // no leading slash
         },
         {
           title: "Pirate Waves (Ship Game)",
           date: "2025-08-10",
           desc: "Arcade ship brawler with waves, a boss, timer, and SFX.",
-          href: "/micro_projects/ship_game_folder/"
+          href: "micro_projects/ship_game_folder/"      // no leading slash
         }
       ],
       mini: [],
       portfolio: []
     };
 
-    // Render helpers
     function createCard({ title, date, desc, href }, kind) {
       const card = document.createElement("div");
       card.className = "card";
+
       const tag = document.createElement("span");
       tag.className = `tag ${kind}`;
       tag.textContent = kind === "micro" ? "Micro" : kind === "mini" ? "Mini" : "Portfolio";
+
       const h3 = document.createElement("h3");
       h3.textContent = title;
+
       const pDate = document.createElement("small");
       pDate.textContent = new Date(date).toLocaleDateString();
+
       const pDesc = document.createElement("p");
       pDesc.textContent = desc;
+
       const link = document.createElement("a");
-      link.href = href;
+      // Always prepend the correct base; strip accidental leading slash first
+      link.href = BASE + href.replace(/^\//, "");
       link.textContent = "Play / View";
       link.rel = "noopener";
+
       card.append(tag, h3, pDate, pDesc, link);
       return card;
     }
