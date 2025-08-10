@@ -532,15 +532,23 @@
   sfxVolEl.addEventListener('input', ()=>{ sfxVolume = sfxVolEl.value/100; ensureAC(); masterGain.gain.value = sfxVolume; saveVolumes(); });
 
   function startGame(){
-    ensureAC(); try { stopChargeLoop(); } catch {}
-    if ((musicEl && (musicEl.querySelector('source') || musicEl.src))) { musicEl.volume = musicVolume; musicEl.play().catch(()=>{}); }
-    reset(); showOverlay("");
+  ensureAC();
+  try { stopChargeLoop(); } catch {}
+  if ((musicEl && (musicEl.querySelector('source') || musicEl.src))) {
+    musicEl.volume = musicVolume;
+    musicEl.play().catch(()=>{});
   }
-  startBtn.addEventListener('click', startGame);
+  reset();
+  running = true;   // <-- IMPORTANT
+  last = 0;         // reset delta timer for smooth first frame
+  showOverlay("");
+}
+
+startBtn.addEventListener('click', startGame);
 
 // Boot
 loadVolumes();
-showOverlay("Steel Waves", "Survive 5 waves, then destroy the Goliath heavy tank. Press Start or Space.");
+showOverlay("Pirate Waves", "Survive 5 waves, then sink the boss galleon. Press Start or Space.");
 loadBest();
 requestAnimationFrame(step);
 
