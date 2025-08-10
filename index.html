@@ -82,60 +82,60 @@
   </footer>
 
   <script>
-    // --- Content -------------------------------------------------------------
-    // Tip: move this into /data/projects.json later and fetch() it.
-    const CONTENT = {
-      micro: [
-        {
-          title: "Hangman",
-          date: "2025-08-09",
-          desc: "A single-file HTML/JS hangman with SFX, hints, and difficulty.",
-          href: "./projects/micro/2025-08-09-hangman/index.html"
-        }
-      ],
-      mini: [
-        // { title:"Tank Trouble", date:"2025-08-10", desc:"Twin-stick tank arena.", href:"./projects/mini/2025-08-10-tank-trouble/" }
-      ],
-      portfolio: [
-        // { title:"Flagship Project", date:"2025-08-01", desc:"A larger scoped game with multiple systems.", href:"./projects/portfolio/flagship/" }
-      ]
-    };
+  const CONTENT = {
+    micro: [
+      {
+        title: "Hangman",
+        date: "2025-08-09",
+        desc: "A single-file HTML/JS hangman with SFX, hints, and difficulty.",
+        href: "./micro_projects/hangman/"
+      },
+      {
+        title: "Pirate Waves (Ship Game)",
+        date: "2025-08-10",
+        desc: "Arcade ship brawler with waves, a boss, timer, and SFX.",
+        href: "./micro_projects/ship_game_folder/"
+      }
+    ],
+    mini: [],
+    portfolio: []
+  };
 
-    // --- Render helpers ------------------------------------------------------
-    function createCard({ title, date, desc, href }, kind) {
-      const card = document.createElement("div");
-      card.className = "card";
-      const tag = document.createElement("span");
-      tag.className = `tag ${kind}`;
-      tag.textContent = kind === "micro" ? "Micro" : kind === "mini" ? "Mini" : "Portfolio";
-      const h3 = document.createElement("h3");
-      h3.textContent = title;
-      const pDate = document.createElement("small");
-      pDate.textContent = new Date(date).toLocaleDateString();
-      const pDesc = document.createElement("p");
-      pDesc.textContent = desc;
-      const link = document.createElement("a");
-      link.href = href;
-      link.textContent = "Play / View";
-      link.rel = "noopener";
-      card.append(tag, h3, pDate, pDesc, link);
-      return card;
-    }
+  function createCard({ title, date, desc, href }, kind) {
+    const card = document.createElement("div");
+    card.className = "card";
+    const tag = document.createElement("span");
+    tag.className = `tag ${kind}`;
+    tag.textContent = kind === "micro" ? "Micro" : kind === "mini" ? "Mini" : "Portfolio";
+    const h3 = document.createElement("h3");
+    h3.textContent = title;
+    const pDate = document.createElement("small");
+    pDate.textContent = new Date(date).toLocaleDateString();
+    const pDesc = document.createElement("p");
+    pDesc.textContent = desc;
+    const link = document.createElement("a");
+    link.href = href;
+    link.textContent = "Play / View";
+    link.rel = "noopener";
+    card.append(tag, h3, pDate, pDesc, link);
+    return card;
+  }
 
-    function renderSection(listId, items, kind) {
-      const container = document.getElementById(listId);
-      container.innerHTML = "";
-      items
-        .slice()
-        .sort((a,b) => new Date(b.date) - new Date(a.date))
-        .forEach(item => container.appendChild(createCard(item, kind)));
-    }
+  function renderSection(listId, items, kind) {
+    const container = document.getElementById(listId);
+    container.innerHTML = "";
+    items
+      .slice()
+      .sort((a,b) => new Date(b.date) - new Date(a.date))
+      .forEach(item => container.appendChild(createCard(item, kind)));
+  }
 
-    renderSection("micro-list", CONTENT.micro, "micro");
-    renderSection("mini-list", CONTENT.mini, "mini");
-    renderSection("portfolio-list", CONTENT.portfolio, "port");
+  renderSection("micro-list", CONTENT.micro, "micro");
+  renderSection("mini-list", CONTENT.mini, "mini");
+  renderSection("portfolio-list", CONTENT.portfolio, "port");
 
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
 </body>
 </html>
